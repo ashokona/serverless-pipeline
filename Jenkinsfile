@@ -1,5 +1,4 @@
 
-
 pipeline {
   agent {
     dockerfile true
@@ -19,26 +18,28 @@ pipeline {
         sh 'npm install'
       }
     }
-    stage('AWS Config') {
-      steps{
-        withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'AWS-Credential-Jenkins-ID']]) {
-        //withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'AWS-Credential-Jenkins-ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
-            // some block
-          echo AWS_ACCESS_KEY_ID
-          sh 'aws configure set aws_access_key_id AWS_ACCESS_KEY_ID'
-          sh 'aws configure set aws_secret_access_key AWS_SECRET_ACCESS_KEY'
-        
-            // config credentials --provider aws --key $AWS_ACCESS_KEY_ID --secret $AWS_SECRET_ACCESS_KEY
-            // echo AWS_ACCESS_KEY_ID
-            // echo $AWS_SECRET_ACCESS_KEY
-        }
-      }
-    }
-   
-    
+    // stage('AWS Config') {
+    //   steps{
+    //     withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'AWS-Credential-Jenkins-ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+    //         // some block
+    //     sh ‘’’
+    //         aws configure set aws_access_key_id AWS_ACCESS_KEY_ID
+    //         aws configure set aws_secret_access_key AWS_SECRET_ACCESS_KEY
+    //     ‘’’
+    //         // config credentials --provider aws --key $AWS_ACCESS_KEY_ID --secret $AWS_SECRET_ACCESS_KEY
+    //         // echo AWS_ACCESS_KEY_ID
+    //         // echo $AWS_SECRET_ACCESS_KEY
+    //     }
+    //   }
+    // }
     stage('Deploy') {
       steps {
-        sh 'serverless deploy'
+          withAwsCli( 
+         credentialsId: 'AWS-Credential-Jenkins-ID', 
+         defaultRegion: 'us-east-1']) {
+             sh 'Serverless deploy'
+         }
+        
       }
     }
   } 
