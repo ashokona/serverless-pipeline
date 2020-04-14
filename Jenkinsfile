@@ -1,6 +1,6 @@
 pipeline {
   agent {
-    agent { dockerfile true }
+    dockerfile true
     //docker {
       //image 'tarampampam/node:13-alpine'
       // args '-p 20001-20100:3000'
