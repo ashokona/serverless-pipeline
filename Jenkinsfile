@@ -18,9 +18,11 @@ pipeline {
       }
     }
     stage('Deployment') {
+      steps{
       withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: '', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
           // some block
         echo AWS_ACCESS_KEY_ID
+      }
       }
     }
   } 
