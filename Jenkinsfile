@@ -28,6 +28,8 @@ pipeline {
       steps {
         sh 'mv node_modules/ sls/'
         sh 'cd sls'
+        sh 'ls -a'
+        sh 'pwd'
         sh 'serverless deploy'
       }
     }
