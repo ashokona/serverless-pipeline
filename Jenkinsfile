@@ -18,11 +18,8 @@ pipeline {
       }
     }
     stage('Deployment') {
-        withCredentials([[$class: ‘AmazonWebServicesCredentialsBinding’, credentialsId: 'AWS-Credential-Jenkins-ID']]) {
-            sh ‘’’
-                serverless config credentials --provider aws --key $AWS_ACCESS_KEY_ID --secret $AWS_SECRET_ACCESS_KEY
-                sls deploy
-            ‘’’
+        withAWS(region:'us-east-2',credentials:'AWS-Credential-Jenkins-ID') {
+              serverless deploy
         }
     }
   } 
