@@ -17,13 +17,21 @@ pipeline {
         sh 'npm install'
       }
     }
-    stage('Deployment') {
+    stage('AWS Config') {
       steps{
-      withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'AWS-Credential-Jenkins-ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
-          // some block
-        echo AWS_ACCESS_KEY_ID
-        echo $AWS_SECRET_ACCESS_KEY
+        withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'AWS-Credential-Jenkins-ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+            // some block
+            aws configure set aws_access_key_id AWS_ACCESS_KEY_ID
+            aws configure set aws_secret_access_key AWS_SECRET_ACCESS_KEY
+            // config credentials --provider aws --key $AWS_ACCESS_KEY_ID --secret $AWS_SECRET_ACCESS_KEY
+            // echo AWS_ACCESS_KEY_ID
+            // echo $AWS_SECRET_ACCESS_KEY
+        }
       }
+    }
+    stage('Deploy') {
+      steps {
+        sh 'Serverless deploy'
       }
     }
   } 
