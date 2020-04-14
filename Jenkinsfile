@@ -17,28 +17,6 @@ pipeline {
         sh 'npm install'
       }
     }
-    stage('Test and Build') {
-      parallel {
-        // stage('Run Tests') {
-        //   steps {
-        //     sh 'npm run test'
-        //   }
-        // }
-        stage('Create Build Artifacts') {
-          steps {
-            script {
-              if (env.BRANCH_NAME == 'master') {
-                  sh 'sudo npm install serverless -g'
-              }else if (env.BRANCH_NAME == 'release') {
-                  sh 'npm run build-release'
-              }else {
-                  sh 'npm run build-dev'
-              }
-            }
-          }
-        }
-      }
-    }
     stage('Deployment') {
       parallel {
         stage('Development') {
