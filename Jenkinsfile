@@ -34,7 +34,7 @@ pipeline {
     // }
     stage('Deploy') {
       steps {
-          withAwsCli( 
+          withAwsCli( [
          credentialsId: 'AWS-Credential-Jenkins-ID', 
          defaultRegion: 'us-east-1']) {
              sh 'Serverless deploy'
