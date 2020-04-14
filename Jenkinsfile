@@ -26,7 +26,7 @@ pipeline {
     }
     stage('Deploy') {
       steps {
-        sh 'Serverless deploy'
+        sh 'serverless deploy'
       }
     }
   } 
