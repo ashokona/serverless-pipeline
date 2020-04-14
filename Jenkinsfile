@@ -26,8 +26,8 @@ pipeline {
     }
     stage('Deploy') {
       steps {
-        sh 'cd sls'
         sh 'mv node_modules/ sls/'
+        sh 'cd sls'
         sh 'serverless deploy'
       }
     }
