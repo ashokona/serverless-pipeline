@@ -27,7 +27,7 @@ pipeline {
           steps {
             script {
               if (env.BRANCH_NAME == 'master') {
-                  sh 'npm install serverless'
+                  sh 'sudo npm install serverless -g'
               }else if (env.BRANCH_NAME == 'release') {
                   sh 'npm run build-release'
               }else {
