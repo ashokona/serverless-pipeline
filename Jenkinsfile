@@ -30,6 +30,9 @@ pipeline {
         sh 'cd sls'
         sh 'ls -a'
         sh 'pwd'
+        dir("sls") {
+          sh "pwd"
+        }
         sh 'serverless deploy'
       }
     }
