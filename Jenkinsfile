@@ -69,7 +69,7 @@ pipeline {
             branch 'master'
           }
           steps {
-            withAWS(region:'us-east-1',credentials:'AWS-Production-Jenkins-Credential-ID') {
+            withAWS(region:'us-east-1',credentials:'AWS-Credential-Jenkins-ID') {
               serverless deploy
             }
             // mail(subject: 'Production Build', body: 'New Deployment to Production', to: 'jenkins-mailing-list@mail.com')
