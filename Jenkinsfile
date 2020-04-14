@@ -18,43 +18,12 @@ pipeline {
       }
     }
     stage('Deployment') {
-      parallel {
-        stage('Development') {
-          when {
-            branch 'dev'
-          }
-          steps {
-            withAWS(region:'us-east-2',credentials:'AWS-Credential-Jenkins-ID') {
-              s3Delete(bucket: 'dev.cloudcops.io', path:'**/*')
-              s3Upload(bucket: 'dev.cloudcops.io', workingDir:'dist', includePathPattern:'**/*');
-            }
-            // mail(subject: 'Staging Build', body: 'New Deployment to Staging', to: 'jenkins-mailing-list@mail.com')
-          }
+        withCredentials([[$class: ‘AmazonWebServicesCredentialsBinding’, credentialsId: 'AWS-Credential-Jenkins-ID']]) {
+            sh ‘’’
+                serverless config credentials --provider aws --key $AWS_ACCESS_KEY_ID --secret $AWS_SECRET_ACCESS_KEY
+                sls deploy
+            ‘’’
         }
-        stage('Release') {
-          when {
-            branch 'release'
-          }
-          steps {
-            withAWS(region:'us-east-1',credentials:'AWS-Credential-Jenkins-ID') {
-              s3Delete(bucket: 'release.cloudcops.io', path:'**/*')
-              s3Upload(bucket: 'release.cloudcops.io', workingDir:'dist', includePathPattern:'**/*');
-            }
-            // mail(subject: 'Staging Build', body: 'New Deployment to Staging', to: 'jenkins-mailing-list@mail.com')
-          }
-        }
-        stage('Production') {
-          when {
-            branch 'master'
-          }
-          steps {
-            withAWS(region:'us-east-1',credentials:'AWS-Credential-Jenkins-ID') {
-              serverless deploy
-            }
-            // mail(subject: 'Production Build', body: 'New Deployment to Production', to: 'jenkins-mailing-list@mail.com')
-          }
-        }
-      }
     }
   } 
 }
