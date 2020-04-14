@@ -24,6 +24,7 @@ pipeline {
         withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'AWS-Credential-Jenkins-ID']]) {
         //withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'AWS-Credential-Jenkins-ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
             // some block
+          echo $AWS_ACCESS_ID
           sh 'aws configure set aws_access_key_id AWS_ACCESS_KEY_ID'
           sh 'aws configure set aws_secret_access_key AWS_SECRET_ACCESS_KEY'
         
@@ -33,6 +34,8 @@ pipeline {
         }
       }
     }
+   
+    
     stage('Deploy') {
       steps {
         sh 'serverless deploy'
