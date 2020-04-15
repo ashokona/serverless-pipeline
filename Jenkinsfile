@@ -14,7 +14,7 @@ pipeline {
   stages {
     stage('Install Packages') {
       steps {
-        echo ${Module}
+        echo '${Module}'
         sh 'npm install'
       }
     }
