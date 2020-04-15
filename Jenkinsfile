@@ -16,8 +16,8 @@ pipeline {
   stages {
     stage('Install Packages') {
       steps {
-        echo '${Module}'
-        echo '${env.BRANCH_NAME}'
+        echo "${Module}"
+        echo "${env.BRANCH_NAME}"
         sh 'npm install'
       }
     }
