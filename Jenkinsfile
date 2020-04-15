@@ -45,7 +45,7 @@ pipeline {
               //  echo 'No'
             //}
             sh "mv node_modules/ ${Module}/"
-            dir("sls") {
+            dir("${Module}") {
               sh 'serverless deploy'
             }
             //sh "rm -r ${Module}/node_modules/"
