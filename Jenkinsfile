@@ -37,7 +37,7 @@ pipeline {
           if ("${Module}" == 'all') {
               //sh 'npm run build-prod'
             echo 'this executes for all modules'
-
+            build_all(modules);
           }else {
             echo "this executes for module ${Module}"
             sh "rm -r ${Module}/node_modules/"
@@ -59,8 +59,9 @@ pipeline {
 def build_all(list) {
     list.each { item ->
         echo "Hello ${item}"
+        sh "rm -r ${Module}/node_modules/"
         sh "mv node_modules/ ${item}/"
-        dir(${item}) {
+        dir("${item}") {
           sh 'serverless deploy'
         }    
     }
