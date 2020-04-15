@@ -33,8 +33,19 @@ pipeline {
           
           if ("${Module}" == 'all') {
               //sh 'npm run build-prod'
-            echo 'this executes for all modules'
-            build_all(modules);
+            echo 'this executes for all modules';
+            for (m in modules) {
+                if (fileExists("${m}/node_modules/")) {
+                  sh "rm -r ${m}/node_modules/"
+                } 
+                sh "mv node_modules/ ${m}/"
+                dir("${m}") {
+                  sh 'serverless deploy'
+                }
+            }
+            
+            
+            //build_all(modules);
           }else {
             echo "this executes for module ${Module}"
             if (fileExists("${Module}/node_modules/")) {
