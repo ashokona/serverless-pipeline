@@ -34,18 +34,8 @@ pipeline {
           if ("${Module}" == 'all') {
               //sh 'npm run build-prod'
             echo 'this executes for all modules';
-            for (m in modules) {
-                if (fileExists("${m}/node_modules/")) {
-                  sh "rm -r ${m}/node_modules/"
-                } 
-                sh "mv node_modules/ ${m}/"
-                dir("${m}") {
-                  sh 'serverless deploy'
-                }
-            }
             
-            
-            //build_all(modules);
+            build_all(modules);
           }else {
             echo "this executes for module ${Module}"
             if (fileExists("${Module}/node_modules/")) {
@@ -66,14 +56,16 @@ pipeline {
 
 @NonCPS // has to be NonCPS or the build breaks on the call to .each
 def build_all(list) {
-    list.each { item ->
-        echo "this executes for module ${item}"
-        if (fileExists("${item}/node_modules/")) {
-            sh "rm -r ${item}/node_modules/"
-        } 
-        sh "mv node_modules/ ${item}/"
-        dir("sls") {
-          sh 'serverless deploy'
-        }  
-    }
+  
+              for (m in list) {
+                if (fileExists("${m}/node_modules/")) {
+                  sh "rm -r ${m}/node_modules/"
+                } 
+                sh "mv node_modules/ ${m}/"
+                dir("${m}") {
+                  sh 'serverless deploy'
+                }
+            }
+  
+
 }
