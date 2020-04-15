@@ -59,7 +59,7 @@ pipeline {
 def build_all(list) {
     list.each { item ->
         echo "Hello ${item}"
-        sh "rm -r ${Module}/node_modules/"
+        sh "rm -r ${item}/node_modules/"
         sh "mv node_modules/ ${item}/"
         dir("${item}") {
           sh 'serverless deploy'
