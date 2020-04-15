@@ -33,7 +33,15 @@ pipeline {
     stage('Deploy') {
       steps {
         script {
-            build_all(modules);
+          for (item in ['sls']) {
+            //cmd = cmd+ "echo $i"
+            echo "Hello ${item}"
+            sh "mv node_modules/ ${item}/"
+            dir(${item}) {
+              sh 'serverless deploy'
+            } 
+          }
+            //build_all(modules);
         }
         //sh 'mv node_modules/ sls/'
         //dir("sls") {
