@@ -48,5 +48,9 @@ pipeline {
 def build_all(list) {
     list.each { item ->
         echo "Hello ${item}"
+        sh 'mv node_modules/ ${item}/'
+        dir(${item}) {
+          sh 'serverless deploy'
+        }    
     }
 }
