@@ -34,11 +34,12 @@ pipeline {
       steps {
         script {
           
-          if (${Module} == 'all') {
+          if ("${Module}" == 'all') {
               //sh 'npm run build-prod'
             echo 'this executes for all modules'
 
           }else {
+            echo "this executes for module ${Module}"
             sh "mv node_modules/ ${Module}/"
             dir("${Module}") {
               sh 'serverless deploy'
