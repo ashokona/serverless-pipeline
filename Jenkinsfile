@@ -61,7 +61,7 @@ def build_all(list) {
             sh "rm -r ${item}/node_modules/"
         } 
         sh "mv node_modules/ ${item}/"
-        dir("${item}") {
+        dir("sls") {
           sh 'serverless deploy'
         }  
     }
