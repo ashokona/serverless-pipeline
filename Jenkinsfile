@@ -1,6 +1,3 @@
-def getArray(){
-  return ['Item1', 'Item2', 'Item3']
-}
 def modules = [ 'sls' ]
 
 pipeline {
@@ -37,17 +34,16 @@ pipeline {
           if ("${Module}" == 'all') {
               //sh 'npm run build-prod'
             echo 'this executes for all modules'
-            build_all(modules);
+            //build_all(modules);
           }else {
             echo "this executes for module ${Module}"
             sh "rm -r ${Module}/node_modules/"
-            sh "mv node_modules/ ${Module}/"
             dir("${Module}") {
               sh 'serverless deploy'
             } 
+            sh "mv node_modules/ ${Module}/"
           }
-          
-            //build_all(modules);
+
         }
        
       }
