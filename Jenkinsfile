@@ -14,6 +14,7 @@ pipeline {
   stages {
     stage('Install Packages') {
       steps {
+        echo ${Module}
         sh 'npm install'
       }
     }
@@ -26,6 +27,10 @@ pipeline {
     }
     stage('Deploy') {
       steps {
+        def modules = ['sls']
+        for(module in modules){
+            echo module
+        }
         sh 'mv node_modules/ sls/'
         dir("sls") {
           sh 'serverless deploy'
