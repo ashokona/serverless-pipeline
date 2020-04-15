@@ -38,7 +38,7 @@ pipeline {
           }else {
             echo "this executes for module ${Module}"
             sh "mv node_modules/ ${Module}/"
-            dir(sls) {
+            dir("sls") {
               sh 'serverless deploy'
             }
             sh "rm -r ${Module}/node_modules/"
