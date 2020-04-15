@@ -22,9 +22,3 @@ RUN apt-get update && \
     && apt-get clean
 
 RUN pip3 --no-cache-dir install --upgrade awscli
-
-CMD ["/bin/bash"]
-
-
-
-RUN aws --version
