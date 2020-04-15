@@ -28,8 +28,8 @@ pipeline {
     stage('Deploy') {
       steps {
         def modules = ['sls']
-        for(module in modules){
-            echo module
+        script {
+            build_all(modules);
         }
         sh 'mv node_modules/ sls/'
         dir("sls") {
@@ -38,4 +38,11 @@ pipeline {
       }
     }
   } 
+}
+
+@NonCPS // has to be NonCPS or the build breaks on the call to .each
+def build_all(list) {
+    list.each { item ->
+        echo "Hello ${item}"
+    }
 }
