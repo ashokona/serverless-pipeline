@@ -40,9 +40,10 @@ pipeline {
             if (fileExists("${Module}/node_modules/")) {
                 echo 'Yes'
                 sh "rm -r ${Module}/node_modules/"
-            } else {
-                echo 'No'
-            }
+            } 
+            //else {
+              //  echo 'No'
+            //}
             sh "mv node_modules/ ${Module}/"
             dir("sls") {
               sh 'serverless deploy'
