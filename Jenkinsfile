@@ -1,3 +1,8 @@
+def getArray(){
+  return ['Item1', 'Item2', 'Item3']
+}
+def modules = [ 'sls' ]
+
 pipeline {
   agent {
     dockerfile true
@@ -27,14 +32,13 @@ pipeline {
     }
     stage('Deploy') {
       steps {
-        def modules = ['sls']
         script {
             build_all(modules);
         }
-        sh 'mv node_modules/ sls/'
-        dir("sls") {
-          sh 'serverless deploy'
-        }        
+        //sh 'mv node_modules/ sls/'
+        //dir("sls") {
+          //sh 'serverless deploy'
+        //}        
       }
     }
   } 
