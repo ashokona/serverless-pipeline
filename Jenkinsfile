@@ -37,11 +37,17 @@ pipeline {
             //build_all(modules);
           }else {
             echo "this executes for module ${Module}"
+            if (fileExists("${Module}/node_modules/")) {
+                echo 'Yes'
+                sh "rm -r ${Module}/node_modules/"
+            } else {
+                echo 'No'
+            }
             sh "mv node_modules/ ${Module}/"
             dir("sls") {
               sh 'serverless deploy'
             }
-            sh "rm -r ${Module}/node_modules/"
+            //sh "rm -r ${Module}/node_modules/"
           }
 
         }
