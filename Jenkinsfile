@@ -33,20 +33,21 @@ pipeline {
     stage('Deploy') {
       steps {
         script {
-          for (item in ['sls']) {
-            //cmd = cmd+ "echo $i"
-            echo "Hello ${item}"
-            sh "mv node_modules/ ${item}/"
-            dir(${item}) {
+          
+          if (${Module} == 'all') {
+              //sh 'npm run build-prod'
+            echo 'this executes for all modules'
+
+          }else {
+            sh "mv node_modules/ ${Module}/"
+            dir("${Module}") {
               sh 'serverless deploy'
             } 
           }
+          
             //build_all(modules);
         }
-        //sh 'mv node_modules/ sls/'
-        //dir("sls") {
-          //sh 'serverless deploy'
-        //}        
+       
       }
     }
   } 
