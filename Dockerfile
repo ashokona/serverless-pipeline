@@ -2,8 +2,9 @@
 FROM ubuntu:latest
 USER root
 
+RUN apt-get clean
 RUN apt-get update
-RUN apt-get -y install curl gnupg
+RUN apt-get -y install curl gnupg unzip
 RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
 
 RUN apt-get -y install nodejs
@@ -11,14 +12,7 @@ RUN apt-get install -y git
 
 RUN npm install serverless -g
 
-RUN apt-get update && \
-    apt-get install -y \
-        python3 \
-        python3-pip \
-        python3-setuptools \
-        groff \
-        less \
-    && pip3 install --upgrade pip \
-    && apt-get clean
 
-RUN pip3 --no-cache-dir install --upgrade awscli
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+RUN unzip awscliv2.zip
+RUN ./aws/install
