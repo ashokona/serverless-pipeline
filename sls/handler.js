@@ -6,6 +6,7 @@ module.exports.endpoint = (event, context, callback) => {
     headers: {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Credentials': true,
+      'foo':'tet'
     },
     body: JSON.stringify({
       message: `Hello, the current time is ${new Date().toTimeString()}.`,
