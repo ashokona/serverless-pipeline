@@ -13,6 +13,10 @@ functions:
       - http:
           path: ping
           method: get
+          request:
+            parameters:
+              headers:
+                foo: true
           cors:
             origin: '*'
             headers:
